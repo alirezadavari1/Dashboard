@@ -1,0 +1,198 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Extra breakpoint for very small phones (below Tailwind's default sm=640px) */
+  --breakpoint-xs: 420px;
+
+  /* Dark (default) surface scale */
+  --color-bg: #0b0e14;
+  --color-surface: #12161f;
+  --color-surface-raised: #171c27;
+  --color-surface-hover: #1c2230;
+  --color-border: #232a38;
+  --color-border-soft: #1a2029;
+
+  /* Text */
+  --color-text-primary: #eef1f6;
+  --color-text-secondary: #8b93a7;
+  --color-text-muted: #5b6376;
+
+  /* Brand / accent — gold, tied directly to XAUUSD */
+  --color-gold: #d4af37;
+  --color-gold-soft: #e8cb6a;
+  --color-gold-dim: #8a712b;
+
+  /* Signal colors */
+  --color-up: #26c281;
+  --color-up-soft: #26c28122;
+  --color-down: #e5484d;
+  --color-down-soft: #e5484d22;
+
+  --radius-card: 1rem;
+}
+
+/* Light mode overrides — softer, low-glare palette (warm stone + slate blue + gold) */
+:root[data-theme="light"] {
+  --color-bg: #e9e6df;
+  --color-surface: #f1efe8;
+  --color-surface-raised: #e6e3da;
+  --color-surface-hover: #dcd8cc;
+  --color-border: #cec9ba;
+  --color-border-soft: #d9d5c8;
+
+  --color-text-primary: #2b2e38;
+  --color-text-secondary: #5c6170;
+  --color-text-muted: #83889a;
+
+  --color-gold: #a3742a;
+  --color-gold-soft: #c2924a;
+  --color-gold-dim: #d9c49a;
+
+  --color-up: #227a56;
+  --color-up-soft: #227a5622;
+  --color-down: #b2413f;
+  --color-down-soft: #b2413f22;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: #0b0e14;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold-dim);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Numeric tabular figures for trading data */
+.font-mono {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Focus visibility */
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ---------------------------------------------------------------------
+   Global responsive foundation
+   Applies to every breakpoint: phones (incl. small ones), tablets,
+   laptops, and large/ultra-wide monitors. Purely additive — does not
+   remove or alter any content, only how it scales/wraps.
+--------------------------------------------------------------------- */
+
+html {
+  /* Fluid root font-size: scales smoothly between phones and large
+     desktops so all rem-based spacing/typography breathes correctly
+     instead of jumping at fixed breakpoints. */
+  font-size: clamp(15px, 0.95vw + 11px, 18px);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  min-width: 320px;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Prevent any single element from forcing horizontal scroll on narrow
+   viewports (long unbroken strings, wide fixed-width blocks, etc). */
+.min-w-0 {
+  min-width: 0;
+}
+
+/* Comfortable, consistent touch targets on touch devices, without
+   changing visual size on precision-pointer devices (mouse/trackpad). */
+@media (pointer: coarse) {
+  button,
+  a,
+  [role='button'],
+  input[type='checkbox'],
+  input[type='radio'] {
+    min-height: 40px;
+    min-width: 40px;
+  }
+  button.icon-btn-sm,
+  a.icon-btn-sm {
+    min-height: 36px;
+    min-width: 36px;
+  }
+}
+
+/* Ultra-wide monitors: cap how far core layouts stretch so line-lengths
+   and card grids stay readable instead of smearing across 3440px+. */
+@media (min-width: 1920px) {
+  .app-shell-max {
+    max-width: 1600px;
+    margin-inline: auto;
+  }
+}
+
+/* Very small phones (<380px): tighten base spacing slightly further. */
+@media (max-width: 380px) {
+  html {
+    font-size: clamp(13.5px, 3.2vw, 15px);
+  }
+}
+
+/* Landscape phones (short viewport height): reclaim vertical space. */
+@media (max-height: 480px) and (orientation: landscape) {
+  .landscape-compact-py {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}

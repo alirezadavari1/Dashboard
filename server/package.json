@@ -1,0 +1,15 @@
+{
+  "name": "dashboard-downloader-server",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Local backend for the Downloader feature — handles Instagram / YouTube / direct-link downloads with live progress.",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}

@@ -1,0 +1,77 @@
+import {
+  Code2,
+  Package,
+  Puzzle,
+  Rocket,
+  Layers,
+  Boxes,
+  Terminal,
+  Cpu,
+  Palette as PaletteIcon,
+  Gamepad2,
+  Bot,
+  Sparkles,
+  Wrench,
+  Globe,
+  type LucideIcon,
+} from 'lucide-react'
+
+// Kept as literal class strings (not template interpolation) so Tailwind's
+// content scanner actually picks up every class used here.
+export interface PaletteEntry {
+  grad: string
+  ring: string
+  text: string
+  chipBg: string
+}
+
+export const PALETTE: PaletteEntry[] = [
+  { grad: 'from-[#d4af37] to-[#8a712b]', ring: 'ring-[#d4af37]/30', text: 'text-[#e8cb6a]', chipBg: 'bg-[#d4af37]/12' },
+  { grad: 'from-fuchsia-500 to-purple-700', ring: 'ring-fuchsia-500/30', text: 'text-fuchsia-300', chipBg: 'bg-fuchsia-500/12' },
+  { grad: 'from-sky-400 to-blue-700', ring: 'ring-sky-400/30', text: 'text-sky-300', chipBg: 'bg-sky-400/12' },
+  { grad: 'from-emerald-400 to-teal-700', ring: 'ring-emerald-400/30', text: 'text-emerald-300', chipBg: 'bg-emerald-400/12' },
+  { grad: 'from-rose-400 to-red-700', ring: 'ring-rose-400/30', text: 'text-rose-300', chipBg: 'bg-rose-400/12' },
+  { grad: 'from-orange-400 to-amber-700', ring: 'ring-orange-400/30', text: 'text-orange-300', chipBg: 'bg-orange-400/12' },
+  { grad: 'from-indigo-400 to-violet-700', ring: 'ring-indigo-400/30', text: 'text-indigo-300', chipBg: 'bg-indigo-400/12' },
+  { grad: 'from-cyan-400 to-blue-600', ring: 'ring-cyan-400/30', text: 'text-cyan-300', chipBg: 'bg-cyan-400/12' },
+]
+
+export function paletteFor(index: number): PaletteEntry {
+  return PALETTE[Math.abs(index) % PALETTE.length]
+}
+
+export interface IconPreset {
+  key: string
+  icon: LucideIcon
+  label: string
+}
+
+export const ICON_PRESETS: IconPreset[] = [
+  { key: 'code', icon: Code2, label: 'کد / اسکریپت' },
+  { key: 'package', icon: Package, label: 'افزونه / پکیج' },
+  { key: 'puzzle', icon: Puzzle, label: 'ابزارک' },
+  { key: 'rocket', icon: Rocket, label: 'استارتاپ' },
+  { key: 'layers', icon: Layers, label: 'وب‌سایت' },
+  { key: 'boxes', icon: Boxes, label: 'اپلیکیشن' },
+  { key: 'terminal', icon: Terminal, label: 'ابزار خط فرمان' },
+  { key: 'cpu', icon: Cpu, label: 'اتوماسیون' },
+  { key: 'palette', icon: PaletteIcon, label: 'طراحی' },
+  { key: 'gamepad', icon: Gamepad2, label: 'بازی' },
+  { key: 'bot', icon: Bot, label: 'ربات / AI' },
+  { key: 'globe', icon: Globe, label: 'وب اپ' },
+  { key: 'wrench', icon: Wrench, label: 'ابزار جانبی' },
+  { key: 'sparkles', icon: Sparkles, label: 'متفرقه' },
+]
+
+export function iconFor(key: string): LucideIcon {
+  return ICON_PRESETS.find((p) => p.key === key)?.icon ?? Package
+}
+
+export function hashString(input: string): number {
+  let h = 0
+  for (let i = 0; i < input.length; i++) {
+    h = (h << 5) - h + input.charCodeAt(i)
+    h |= 0
+  }
+  return h
+}
